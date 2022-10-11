@@ -3,18 +3,47 @@
   <head>
     <%- include('partials/head') %>
   </head>
-  <body>
-    <h1><%= title %></h1>
-    <form class="flex flex-col" action="" method="POST">
-      <label class="input-primary" for="firstname">First Name</label>
-      <input name="firstname" placeholder="firstname" type="text" />
-      <label class="input-primary" for="lastname">Last Name</label>
-      <input name="lastname" placeholder="lastname" type="text" />
-      <label class="input-primary" for="username">Username</label>
-      <input name="username" placeholder="username" type="text" />
-      <label class="input-primary" for="password">Password</label>
-      <input name="password" type="password" />
-      <button>Sign Up</button>
-    </form>
+  <body class="bg-slate-800">
+    <header><%- include('partials/header') %></header>
+    <main
+      class="flex flex-col w-1/4 mx-auto gap-4 mt-4 px-4 py-2 bg-slate-900 rounded text-white"
+    >
+      <h1 class="font-bold text-2xl"><%= title %></h1>
+      <form class="flex flex-col gap-1" action="" method="POST">
+        <label class="" for="firstname">First Name</label>
+        <input
+          class="input-primary"
+          name="firstname"
+          placeholder="John"
+          type="text"
+        />
+        <label class="" for="lastname">Last Name</label>
+        <input
+          class="input-primary"
+          name="lastname"
+          placeholder="Doe"
+          type="text"
+        />
+        <label class="" for="email">Email</label>
+        <input
+          class="input-primary"
+          name="username"
+          placeholder="JohnDoe@proton.me"
+          type="text"
+        />
+        <label class="" for="password">Password</label>
+        <input
+          class="input-primary"
+          name="password"
+          type="password"
+          placeholder="Enter a secure password"
+        />
+        <button
+          class="mt-4 py-1 rounded bg-slate-800 hover:bg-slate-500 w-1/2 mx-auto"
+        >
+          Sign Up
+        </button>
+      </form>
+    </main>
   </body>
 </html>

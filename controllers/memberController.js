@@ -3,7 +3,7 @@ const Members = require('../models/members');
 // Display list of all Members.
 
 exports.member_create_get = function (req, res) {
-  res.render('sign-up-form', { title: 'Sign Up' });
+  res.render('sign-up-form', { title: 'Member Sign Up' });
 };
 
 exports.member_create_post = function (req, res) {
