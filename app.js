@@ -8,6 +8,10 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const dotenv = require('dotenv').config();
 
+// Models
+const Members = require('./models/members');
+
+// Routes
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var authRouter = require('./routes/authRouter');
@@ -33,13 +37,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Passport
 passport.use(
-  new LocalStrategy((username, password, done) => {
-    User.findOne({ username: username }, (err, user) => {
+  new LocalStrategy((email, password, done) => {
+    Members.findOne({ email: email }, (err, user) => {
       if (err) {
         return done(err);
       }
       if (!user) {
-        return done(null, false, { message: 'Incorrect username' });
+        return done(null, false, { message: 'Incorrect email' });
       }
       if (user.password !== password) {
         return done(null, false, { message: 'Incorrect password' });
@@ -54,7 +58,7 @@ passport.serializeUser(function (user, done) {
 });
 
 passport.deserializeUser(function (id, done) {
-  User.findById(id, function (err, user) {
+  Members.findById(id, function (err, user) {
     done(err, user);
   });
 });

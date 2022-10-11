@@ -3,7 +3,12 @@
 >
   <a class="hover:text-gray-500" href="/">Members Only</a>
   <div class="flex gap-4">
-    <a class="hover:text-gray-500" href="/auth/sign-up">Sign-Up</a>
-    <a class="hover:text-gray-500" href="/auth/log-in">Log-In</a>
+    <a class="hover:text-gray-500" href="/auth/sign-up"> Sign-Up </a>
+
+    <% if (user) { %>
+    <a class="hover:text-gray-500" href="/auth/log-out"> Log-Out </a>
+    <% } else { %>
+    <a class="hover:text-gray-500" href="/auth/log-in"> Log-In </a>
+    <% } %> <%= console.log(user) %>
   </div>
 </nav>

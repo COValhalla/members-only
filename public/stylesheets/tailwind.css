@@ -4,6 +4,6 @@
 
 @layer components {
   .input-primary {
-    @apply border border-gray-300 rounded-md shadow-sm;
+    @apply border border-gray-300 rounded-md shadow-sm text-black;
   }
 }
