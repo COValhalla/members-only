@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <title></title>
+    <%- include('partials/head') %>
   </head>
   <body>
     <h1><%= title %></h1>
-    <form action="" method="POST">
-      <label for="username">Username</label>
+    <form class="flex flex-col" action="" method="POST">
+      <label class="input-primary" for="firstname">First Name</label>
+      <input name="firstname" placeholder="firstname" type="text" />
+      <label class="input-primary" for="lastname">Last Name</label>
+      <input name="lastname" placeholder="lastname" type="text" />
+      <label class="input-primary" for="username">Username</label>
       <input name="username" placeholder="username" type="text" />
-      <label for="password">Password</label>
+      <label class="input-primary" for="password">Password</label>
       <input name="password" type="password" />
       <button>Sign Up</button>
     </form>
