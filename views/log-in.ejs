@@ -9,12 +9,12 @@
       class="flex flex-col w-1/4 mx-auto gap-4 mt-4 px-4 py-2 bg-slate-900 rounded text-white"
     >
       <h1 class="font-bold text-2xl"><%= title %></h1>
-      <form class="flex flex-col gap-1" action="" method="POST">
-        <label class="" for="email">Email</label>
+      <form class="flex flex-col gap-1" action="/auth/log-in" method="POST">
+        <label class="" for="email">Username</label>
         <input
           class="input-primary"
-          name="email"
-          placeholder="Enter email"
+          name="username"
+          placeholder="Enter username"
           type="text"
         />
         <label class="" for="password">Password</label>

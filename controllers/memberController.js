@@ -9,9 +9,7 @@ exports.member_signup_get = function (req, res) {
 
 exports.member_signup_post = function (req, res, next) {
   const user = new Members({
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
-    email: req.body.email,
+    username: req.body.username,
     password: req.body.password,
   }).save((err) => {
     if (err) {
@@ -26,14 +24,6 @@ exports.member_login_get = function (req, res) {
 };
 
 exports.member_login_post = passport.authenticate('local', {
-  successRedirect: '/test',
+  successRedirect: '/',
   failureRedirect: '/auth/log-in',
 });
-
-// app.post(
-//   "/log-in",
-//   passport.authenticate("local", {
-//     successRedirect: "/",
-//     failureRedirect: "/"
-//   })
-// );

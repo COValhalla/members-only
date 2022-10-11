@@ -37,13 +37,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Passport
 passport.use(
-  new LocalStrategy((email, password, done) => {
-    Members.findOne({ email: email }, (err, user) => {
+  new LocalStrategy((username, password, done) => {
+    Members.findOne({ username: username }, (err, user) => {
       if (err) {
         return done(err);
       }
       if (!user) {
-        return done(null, false, { message: 'Incorrect email' });
+        return done(null, false, { message: 'Incorrect username' });
       }
       if (user.password !== password) {
         return done(null, false, { message: 'Incorrect password' });
@@ -71,6 +71,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
+app.post(
+  '/auth/log-in',
+  passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/auth/log-in',
+  }),
+);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
