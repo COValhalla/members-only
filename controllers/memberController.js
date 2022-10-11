@@ -17,3 +17,15 @@ exports.member_create_post = function (req, res) {
     res.redirect('/');
   });
 };
+
+exports.member_login_get = function (req, res) {
+  res.render('log-in', { title: 'Member Log In' });
+};
+
+// app.post(
+//   "/log-in",
+//   passport.authenticate("local", {
+//     successRedirect: "/",
+//     failureRedirect: "/"
+//   })
+// );
