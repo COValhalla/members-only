@@ -1,5 +1,6 @@
 const Members = require('../models/members');
 const passport = require('passport');
+const bcrypt = require('bcrypt');
 
 // Display list of all Members.
 
@@ -8,14 +9,19 @@ exports.member_signup_get = function (req, res) {
 };
 
 exports.member_signup_post = function (req, res, next) {
-  const user = new Members({
-    username: req.body.username,
-    password: req.body.password,
-  }).save((err) => {
+  bcrypt.hash('req.body.password', 10, (err, hashedPassword) => {
     if (err) {
       return next(err);
     }
-    res.redirect('/');
+    const user = new Members({
+      username: req.body.username,
+      password: hashedPassword,
+    }).save((err) => {
+      if (err) {
+        return next(err);
+      }
+      res.redirect('/');
+    });
   });
 };
 
