@@ -52,11 +52,9 @@ passport.use(
       }
       bcrypt.compare(password, user.password, (err, res) => {
         if (res) {
-          console.log('Password is correct');
           return done(null, user);
         } else {
           // passwords do not match!
-          console.log('Password is incorrect');
           return done(null, false, { message: 'Incorrect password' });
         }
       });
