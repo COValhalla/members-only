@@ -1,29 +1,82 @@
 const Members = require('../models/members');
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
+const { body, validationResult } = require('express-validator');
+const passwordValidator = require('password-validator');
+
+// Password validator
+const schema = new passwordValidator();
+schema.is().min(4).is().max(24).has().not().spaces();
 
 // Display list of all Members.
 
 exports.member_signup_get = function (req, res) {
-  res.render('sign-up-form', { title: 'Member Sign Up', user: req.user });
+  res.render('sign-up-form', {
+    title: 'Member Sign Up',
+    user: req.user,
+    errors: null,
+  });
 };
 
-exports.member_signup_post = function (req, res, next) {
-  bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
-    if (err) {
-      return next(err);
+exports.member_signup_post = [
+  body('password', 'Password must be between 4 and 24 characters.')
+    .trim()
+    .isLength({ min: 4, max: 24 })
+    .escape(),
+  function (req, res, next) {
+    const errors = validationResult(req);
+    // Password validation
+    if (!errors.isEmpty()) {
+      res.render('sign-up-form', {
+        title: 'Member Sign Up',
+        user: req.user,
+        errors: errors.array(),
+      });
+      return;
+    } else if (req.body.password !== req.body.confPassword) {
+      const errors = [{ msg: 'Passwords do not match.' }];
+      res.render('sign-up-form', {
+        title: 'Member Sign Up',
+        user: req.user,
+        errors: errors,
+      });
     }
-    const user = new Members({
-      username: req.body.username,
-      password: hashedPassword,
-    }).save((err) => {
+
+    // Confirm unique username
+    Members.findOne({ username: req.body.username }).exec(function (
+      err,
+      found_member,
+    ) {
       if (err) {
         return next(err);
       }
-      res.redirect('/');
+      if (found_member) {
+        res.render('sign-up-form', {
+          title: 'Member Sign Up',
+          user: req.user,
+          errors: [{ msg: 'Username already exists.' }],
+        });
+        return;
+      }
     });
-  });
-};
+
+    // Data from form is valid.
+    bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
+      if (err) {
+        return next(err);
+      }
+      const user = new Members({
+        username: req.body.username,
+        password: hashedPassword,
+      }).save((err) => {
+        if (err) {
+          return next(err);
+        }
+        res.redirect('/');
+      });
+    });
+  },
+];
 
 exports.member_login_get = function (req, res) {
   res.render('log-in', { title: 'Member Log In', user: req.user });
