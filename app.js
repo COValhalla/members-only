@@ -7,6 +7,7 @@ const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const dotenv = require('dotenv').config();
+const bcrypt = require('bcryptjs');
 
 // Models
 const Members = require('./models/members');
@@ -34,6 +35,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(function (req, res, next) {
+  res.locals.currentUser = req.user;
+  next();
+});
 
 // Passport
 passport.use(
@@ -45,10 +50,16 @@ passport.use(
       if (!user) {
         return done(null, false, { message: 'Incorrect username' });
       }
-      if (user.password !== password) {
-        return done(null, false, { message: 'Incorrect password' });
-      }
-      return done(null, user);
+      bcrypt.compare(password, user.password, (err, res) => {
+        if (res) {
+          console.log('Password is correct');
+          return done(null, user);
+        } else {
+          // passwords do not match!
+          console.log('Password is incorrect');
+          return done(null, false, { message: 'Incorrect password' });
+        }
+      });
     });
   }),
 );
