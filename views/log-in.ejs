@@ -24,6 +24,11 @@
           placeholder="Enter password"
           type="password"
         />
+
+        <% if (message) { %>
+        <p class="text-red-700"><%= message %></p>
+        <% } %>
+
         <button
           class="mt-4 py-1 rounded bg-slate-800 hover:bg-slate-500 w-1/2 mx-auto"
         >

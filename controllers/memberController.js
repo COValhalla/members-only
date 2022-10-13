@@ -79,13 +79,35 @@ exports.member_signup_post = [
 ];
 
 exports.member_login_get = function (req, res) {
-  res.render('log-in', { title: 'Member Log In', user: req.user });
+  res.render('log-in', {
+    title: 'Member Log In',
+    user: req.user,
+    message: null,
+  });
 };
 
-exports.member_login_post = passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/auth/log-in',
-});
+exports.member_login_post = function (req, res, next) {
+  passport.authenticate('local', function (err, user, info) {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      res.render('log-in', {
+        title: 'Member Log In',
+        user: user.username,
+        message: info.message,
+      });
+      return;
+    }
+    if (res) {
+      res.render('./', {
+        title: 'Home',
+        user: user.username,
+      });
+    }
+    return;
+  })(req, res, next);
+};
 
 exports.member_logout_get = function (req, res) {
   req.logout(function (err) {
