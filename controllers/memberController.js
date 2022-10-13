@@ -9,7 +9,7 @@ exports.member_signup_get = function (req, res) {
 };
 
 exports.member_signup_post = function (req, res, next) {
-  bcrypt.hash('req.body.password', 10, (err, hashedPassword) => {
+  bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
     if (err) {
       return next(err);
     }
