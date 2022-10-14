@@ -85,7 +85,21 @@ exports.member_signup_post = [
         if (err) {
           return next(err);
         }
-        res.redirect('/');
+        // Authenticates newly created user
+        passport.authenticate('local', function (err, user, info) {
+          if (err) {
+            return next(err);
+          }
+          if (!user) {
+            return res.redirect('/sign-up');
+          }
+          req.logIn(user, function (err) {
+            if (err) {
+              return next(err);
+            }
+            return res.redirect('/');
+          });
+        })(req, res, next);
       });
     });
   },
@@ -113,9 +127,11 @@ exports.member_login_post = function (req, res, next) {
       return;
     }
     if (res) {
-      res.render('./', {
-        title: 'Home',
-        user: user.username,
+      req.login(user, function (err) {
+        if (err) {
+          return next(err);
+        }
+        return res.redirect('/');
       });
     }
     return;
