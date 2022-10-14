@@ -35,11 +35,12 @@
 
         <% if (errors.main) { %>
         <p class="text-red-700">
-          <% errors.main.forEach((error) => { %> <%= error %> <% }) %>
+          <% errors.main.forEach((error) => { %> <%= error %> <br />
+          <% }) %>
         </p>
         <% } %>
 
-        <label class="pt-5" for="memberPassword"
+        <label class="pt-2" for="memberPassword"
           >Enter Member's Club Password</label
         >
         <input
