@@ -1,0 +1,14 @@
+<footer
+  class="flex justify-between bg-slate-900 text-white fixed inset-x-0 bottom-0 py-4 px-8"
+>
+  <% if (user) { %>
+  <p class="text-sm">Logged in as <%= user.username %></p>
+  <% } %>
+  <p></p>
+  <p>
+    Project by
+    <a class="hover:bg-slate-600 rounded" href="https://github.com/COValhalla"
+      >COValhalla</a
+    >
+  </p>
+</footer>
