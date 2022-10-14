@@ -144,7 +144,10 @@ exports.member_access_signup_get = function (req, res) {
   });
 };
 exports.member_access_signup_post = function (req, res) {
-  if (req.body.memberPassword === process.env.MEMBER_PASSWORD) {
+  if (
+    req.body.memberPassword === process.env.MEMBER_PASSWORD &&
+    req.user.status !== 'member'
+  ) {
     Members.findOneAndUpdate(
       { username: req.user.username },
       { status: 'member' },
@@ -167,9 +170,17 @@ exports.member_access_signup_post = function (req, res) {
       },
     );
   } else {
+    const status = req.user.status;
+    let error = null;
+    if (status === 'member') {
+      error = [{ msg: 'Incorrect admin password.' }];
+    } else {
+      error = [{ msg: 'Incorrect member password.' }];
+    }
+
     res.render('member-sign-up-form', {
       title: 'Member Access Sign Up',
-      errors: [{ msg: 'Incorrect password.' }],
+      errors: error,
     });
   }
 };
