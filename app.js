@@ -77,6 +77,16 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 
+app.use(function (req, res, next) {
+  res.locals.user = req.user;
+  if (typeof req.user !== 'undefined') {
+    res.locals.status = req.user.status;
+  } else {
+    res.locals.status = 'undefined';
+  }
+  next();
+});
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);

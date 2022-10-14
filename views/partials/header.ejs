@@ -6,7 +6,13 @@
 
 
     <% if (user) { %>
-    <a class="hover:text-gray-500" href="/auth/member-sign-up"> Become Member </a>
+      <% if (status === 'guest') { %>
+        <a class="hover:text-gray-500" href="/auth/member-sign-up"> Become Member </a>
+      <% } %>
+      <% if (status === 'member') { %>
+        <a class="hover:text-gray-500" href="/auth/member-sign-up"> Become Admin </a>
+      <% } %>
+    
     <a class="hover:text-gray-500" href="/auth/log-out"> Log-Out </a>
     <% } else { %>
       <a class="hover:text-gray-500" href="/auth/sign-up"> Sign-Up </a>

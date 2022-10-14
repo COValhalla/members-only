@@ -49,6 +49,7 @@ exports.member_signup_post = [
       res.render('sign-up-form', {
         title: 'Members-Only Sign Up',
         user: req.body.username,
+
         errors: parsedErrors,
       });
       return;
@@ -66,6 +67,7 @@ exports.member_signup_post = [
         res.render('sign-up-form', {
           title: 'Members-Only Sign Up',
           user: req.user,
+
           errors: [{ msg: 'Username already exists.' }],
         });
         return;
@@ -145,10 +147,37 @@ exports.member_access_signup_get = function (req, res) {
     errors: { main: [], member: [] },
   });
 };
-exports.member_access_signup_post = function (req, res) {};
-
-exports.admin_access_signup_get = function (req, res) {};
-exports.admin_access_signup_post = function (req, res) {};
+exports.member_access_signup_post = function (req, res) {
+  if (req.body.memberPassword === process.env.MEMBER_PASSWORD) {
+    Members.findOneAndUpdate(
+      { username: req.user.username },
+      { status: 'member' },
+      function (err, member) {
+        if (err) {
+          return next(err);
+        }
+        res.redirect('/');
+      },
+    );
+  } else if (req.body.memberPassword === process.env.ADMIN_PASSWORD) {
+    Members.findOneAndUpdate(
+      { username: req.user.username },
+      { status: 'admin' },
+      function (err, member) {
+        if (err) {
+          return next(err);
+        }
+        res.redirect('/');
+      },
+    );
+  } else {
+    res.render('member-sign-up-form', {
+      title: 'Member Access Sign Up',
+      user: req.user,
+      errors: [{ msg: 'Incorrect password.' }],
+    });
+  }
+};
 
 exports.member_logout_get = function (req, res) {
   req.logout(function (err) {
