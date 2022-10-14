@@ -43,6 +43,7 @@ app.use(function (req, res, next) {
 // Passport
 passport.use(
   new LocalStrategy((username, password, done) => {
+    username = username.toLowerCase();
     Members.findOne({ username: username }, (err, user) => {
       if (err) {
         return done(err);

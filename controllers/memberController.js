@@ -140,8 +140,7 @@ exports.member_login_post = function (req, res, next) {
 exports.member_access_signup_get = function (req, res) {
   res.render('member-sign-up-form', {
     title: 'Member Access Sign Up',
-
-    errors: { main: [], member: [] },
+    errors: [{ msg: '' }],
   });
 };
 exports.member_access_signup_post = function (req, res) {

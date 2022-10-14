@@ -20,9 +20,9 @@
           placeholder="Enter the secret password."
         />
 
-        <% if (errors.member) { %>
+        <% if (errors) { %>
         <p class="text-red-700">
-          <% errors.member.forEach((error) => { %> <%= error %> <% }) %>
+          <% errors.forEach((error) => { %> <%= error.msg %> <% }) %>
         </p>
         <% } %>
 
