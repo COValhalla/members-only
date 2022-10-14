@@ -56,7 +56,7 @@ exports.member_signup_post = [
     if (!errors.isEmpty()) {
       res.render('sign-up-form', {
         title: 'Member Sign Up',
-        user: req.user,
+        user: req.body.username,
         errors: parsedErrors,
       });
       return;
