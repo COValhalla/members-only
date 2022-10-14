@@ -9,11 +9,9 @@ const dotenv = require('dotenv').config();
 const schema = new passwordValidator();
 schema.is().min(4).is().max(24).has().not().spaces();
 
-// Display list of all Members.
-
 exports.member_signup_get = function (req, res) {
   res.render('sign-up-form', {
-    title: 'Member Sign Up',
+    title: 'Members-Only Sign Up',
     user: req.user,
     errors: { main: [], member: [] },
   });
@@ -30,19 +28,9 @@ exports.member_signup_post = [
     .escape(),
   body('confPassword', 'Passwords do not match.').custom((value, { req }) => {
     if (value !== req.body.password) {
-      throw new Error('Passwords do not match.');
-    }
-    return true;
-  }),
-  body('memberPassword', 'Incorrect member password.').custom((value) => {
-    if (
-      value === process.env.memberPassword ||
-      value === process.env.adminPassword
-    ) {
-      return true;
-    } else {
       return false;
     }
+    return true;
   }),
 
   function (req, res, next) {
@@ -59,7 +47,7 @@ exports.member_signup_post = [
     // Render form with validation errors
     if (!errors.isEmpty()) {
       res.render('sign-up-form', {
-        title: 'Member Sign Up',
+        title: 'Members-Only Sign Up',
         user: req.body.username,
         errors: parsedErrors,
       });
@@ -76,7 +64,7 @@ exports.member_signup_post = [
       }
       if (found_member) {
         res.render('sign-up-form', {
-          title: 'Member Sign Up',
+          title: 'Members-Only Sign Up',
           user: req.user,
           errors: [{ msg: 'Username already exists.' }],
         });
@@ -92,7 +80,7 @@ exports.member_signup_post = [
       const user = new Members({
         username: req.body.username,
         password: hashedPassword,
-        status: 'member',
+        status: 'guest',
       }).save((err) => {
         if (err) {
           return next(err);
@@ -133,6 +121,18 @@ exports.member_login_post = function (req, res, next) {
     return;
   })(req, res, next);
 };
+
+exports.member_access_signup_get = function (req, res) {
+  res.render('member-sign-up-form', {
+    title: 'Member Access Sign Up',
+    user: req.user,
+    errors: { main: [], member: [] },
+  });
+};
+exports.member_access_signup_post = function (req, res) {};
+
+exports.admin_access_signup_get = function (req, res) {};
+exports.admin_access_signup_post = function (req, res) {};
 
 exports.member_logout_get = function (req, res) {
   req.logout(function (err) {

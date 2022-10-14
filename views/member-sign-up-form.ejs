@@ -10,33 +10,19 @@
     >
       <h1 class="font-bold text-2xl"><%= title %></h1>
       <form class="flex flex-col gap-1" action="" method="POST">
-        <label for="username">Username</label>
+        <label class="pt-2" for="memberPassword"
+          >Enter Member's Club Password</label
+        >
         <input
           class="input-primary"
-          name="username"
-          placeholder="Enter a username"
-          type="text"
-          value="<%= user %>"
-        />
-        <label for="password">Password</label>
-        <input
-          class="input-primary"
-          name="password"
+          name="memberPassword"
           type="password"
-          placeholder="Enter a secure password"
-        />
-        <label for="confPassword">Confirm Password</label>
-        <input
-          class="input-primary"
-          name="confPassword"
-          type="password"
-          placeholder="Confirm your password"
+          placeholder="Enter the secret password."
         />
 
-        <% if (errors.main) { %>
+        <% if (errors.member) { %>
         <p class="text-red-700">
-          <% errors.main.forEach((error) => { %> <%= error %> <br />
-          <% }) %>
+          <% errors.member.forEach((error) => { %> <%= error %> <% }) %>
         </p>
         <% } %>
 
