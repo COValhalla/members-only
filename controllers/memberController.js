@@ -12,7 +12,6 @@ schema.is().min(4).is().max(24).has().not().spaces();
 exports.member_signup_get = function (req, res) {
   res.render('sign-up-form', {
     title: 'Members-Only Sign Up',
-    user: req.user,
     errors: { main: [], member: [] },
   });
 };
@@ -49,7 +48,6 @@ exports.member_signup_post = [
       res.render('sign-up-form', {
         title: 'Members-Only Sign Up',
         user: req.body.username,
-
         errors: parsedErrors,
       });
       return;
@@ -66,7 +64,6 @@ exports.member_signup_post = [
       if (found_member) {
         res.render('sign-up-form', {
           title: 'Members-Only Sign Up',
-          user: req.user,
 
           errors: [{ msg: 'Username already exists.' }],
         });
@@ -110,7 +107,6 @@ exports.member_signup_post = [
 exports.member_login_get = function (req, res) {
   res.render('log-in', {
     title: 'Member Log In',
-    user: req.user,
     message: null,
   });
 };
@@ -143,7 +139,7 @@ exports.member_login_post = function (req, res, next) {
 exports.member_access_signup_get = function (req, res) {
   res.render('member-sign-up-form', {
     title: 'Member Access Sign Up',
-    user: req.user,
+
     errors: { main: [], member: [] },
   });
 };
@@ -173,7 +169,6 @@ exports.member_access_signup_post = function (req, res) {
   } else {
     res.render('member-sign-up-form', {
       title: 'Member Access Sign Up',
-      user: req.user,
       errors: [{ msg: 'Incorrect password.' }],
     });
   }
