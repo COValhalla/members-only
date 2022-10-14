@@ -32,9 +32,25 @@
           placeholder="Confirm your password"
         />
 
-        <% if (errors) { %>
+        <% if (errors.main) { %>
         <p class="text-red-700">
-          <% errors.forEach((error) => { %> <%= error.msg %> <% }) %>
+          <% errors.main.forEach((error) => { %> <%= error %> <% }) %>
+        </p>
+        <% } %>
+
+        <label class="pt-5" for="memberPassword"
+          >Enter Member's Club Password</label
+        >
+        <input
+          class="input-primary"
+          name="memberPassword"
+          type="password"
+          placeholder="Enter the secret password."
+        />
+
+        <% if (errors.member) { %>
+        <p class="text-red-700">
+          <% errors.member.forEach((error) => { %> <%= error %> <% }) %>
         </p>
         <% } %>
 

@@ -3,6 +3,7 @@ const passport = require('passport');
 const bcrypt = require('bcryptjs');
 const { body, validationResult } = require('express-validator');
 const passwordValidator = require('password-validator');
+const dotenv = require('dotenv').config();
 
 // Password validator
 const schema = new passwordValidator();
@@ -14,7 +15,7 @@ exports.member_signup_get = function (req, res) {
   res.render('sign-up-form', {
     title: 'Member Sign Up',
     user: req.user,
-    errors: null,
+    errors: { main: [], member: [] },
   });
 };
 
@@ -23,23 +24,42 @@ exports.member_signup_post = [
     .trim()
     .isLength({ min: 4, max: 24 })
     .escape(),
+  body('confPassword', 'Passwords do not match.').custom((value, { req }) => {
+    if (value !== req.body.password) {
+      throw new Error('Passwords do not match.');
+    }
+    return true;
+  }),
+  body('memberPassword', 'Incorrect member password.').custom((value) => {
+    if (
+      value === process.env.memberPassword ||
+      value === process.env.adminPassword
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }),
+
   function (req, res, next) {
     const errors = validationResult(req);
-    // Password validation
+    const parsedErrors = { main: [], member: [] };
+    errors.array().forEach((error) => {
+      if (error.param === 'memberPassword') {
+        parsedErrors.member.push(error.msg);
+      } else {
+        parsedErrors.main.push(error.msg);
+      }
+    });
+
+    // Render form with validation errors
     if (!errors.isEmpty()) {
       res.render('sign-up-form', {
         title: 'Member Sign Up',
         user: req.user,
-        errors: errors.array(),
+        errors: parsedErrors,
       });
       return;
-    } else if (req.body.password !== req.body.confPassword) {
-      const errors = [{ msg: 'Passwords do not match.' }];
-      res.render('sign-up-form', {
-        title: 'Member Sign Up',
-        user: req.user,
-        errors: errors,
-      });
     }
 
     // Confirm unique username
@@ -68,6 +88,7 @@ exports.member_signup_post = [
       const user = new Members({
         username: req.body.username,
         password: hashedPassword,
+        status: 'member',
       }).save((err) => {
         if (err) {
           return next(err);
