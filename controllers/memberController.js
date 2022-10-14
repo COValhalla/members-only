@@ -20,6 +20,10 @@ exports.member_signup_get = function (req, res) {
 };
 
 exports.member_signup_post = [
+  body('username', 'Username must be between 4 and 24 characters.')
+    .trim()
+    .isLength({ min: 4, max: 24 })
+    .escape(),
   body('password', 'Password must be between 4 and 24 characters.')
     .trim()
     .isLength({ min: 4, max: 24 })
