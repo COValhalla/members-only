@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('partials/head') %>
+  </head>
+  <body class="bg-slate-800">
+    <header><%- include('partials/header') %></header>
+    <main
+      class="flex flex-col w-1/4 mx-auto gap-4 mt-4 px-4 py-2 bg-slate-900 rounded text-white"
+    >
+      <h1 class="font-bold text-2xl"><%= title %></h1>
+      <form class="flex flex-col gap-1" action="" method="POST">
+        <label for="title">Title</label>
+        <input
+          class="input-primary"
+          name="title"
+          placeholder="Enter a message title"
+          type="text"
+        />
+
+        <label for="message">Message</label>
+        <textarea
+          class="rounded"
+          placeholder="Enter a message"
+          name="message"
+          id="message"
+          cols="20"
+          rows="5"
+        ></textarea>
+
+        <button
+          class="mt-4 py-1 rounded bg-slate-800 hover:bg-slate-500 w-1/2 mx-auto"
+        >
+          Submit Message
+        </button>
+      </form>
+    </main>
+    <footer><%- include('partials/footer') %></footer>
+  </body>
+</html>

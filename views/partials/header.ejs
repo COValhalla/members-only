@@ -6,6 +6,7 @@
 
 
     <% if (user) { %>
+      <a class="hover:text-gray-500" href="/auth/create-message"> Create Message </a>
       <% if (status === 'guest') { %>
         <a class="hover:text-gray-500" href="/auth/member-sign-up"> Become Member </a>
       <% } %>

@@ -185,6 +185,11 @@ exports.member_access_signup_post = function (req, res) {
   }
 };
 
+exports.create_message_get = function (req, res) {
+  res.render('create-message-form', { title: 'Create Message' });
+};
+exports.create_message_post = function (req, res) {};
+
 exports.member_logout_get = function (req, res) {
   req.logout(function (err) {
     if (err) {
