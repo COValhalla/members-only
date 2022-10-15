@@ -1,4 +1,5 @@
 const Members = require('../models/members');
+const Messages = require('../models/messages');
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
 const { body, validationResult } = require('express-validator');
@@ -188,7 +189,18 @@ exports.member_access_signup_post = function (req, res) {
 exports.create_message_get = function (req, res) {
   res.render('create-message-form', { title: 'Create Message' });
 };
-exports.create_message_post = function (req, res) {};
+exports.create_message_post = function (req, res, next) {
+  const message = new Messages({
+    title: req.body.title,
+    message: req.body.message,
+    author: req.user._id,
+  }).save((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect('/');
+  });
+};
 
 exports.member_logout_get = function (req, res) {
   req.logout(function (err) {
