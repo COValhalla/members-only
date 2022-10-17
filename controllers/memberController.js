@@ -10,6 +10,21 @@ const dotenv = require('dotenv').config();
 const schema = new passwordValidator();
 schema.is().min(4).is().max(24).has().not().spaces();
 
+exports.home_get = function (req, res, next) {
+  Messages.find()
+    .populate('author')
+    .sort({ date: -1 })
+    .exec(function (err, messages) {
+      if (err) {
+        return next(err);
+      }
+      res.render('index', {
+        title: 'Home',
+        messages: messages,
+      });
+    });
+};
+
 exports.member_signup_get = function (req, res) {
   res.render('sign-up-form', {
     title: 'Members-Only Sign Up',
