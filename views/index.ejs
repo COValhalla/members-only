@@ -8,13 +8,17 @@
     <main>
       <div class="flex-col flex gap-2 bg-slate-900 w-1/2 rounded mx-auto my-4 p-2">
         <% for(var i=0; i<messages.length; i++) { %>
-          <div class="flex gap-4 bg-slate-800 rounded p-1">
-              <p class="text-center"><%= messages[i].title %></p>
+          <div class="flex flex-col gap-3 bg-slate-800 rounded p-1">
+            <div class="flex gap-4 justify-between">
+              <p class="text-center">Title: <%= messages[i].title %></p>
               <% if (status === 'member' || status === 'admin') { %>
-                <p class="text-center"><%= messages[i].author.username %></p>
+                <p class="text-center">Author: <%= messages[i].author.username %></p>
+                <p class="text-center">Date: <%= messages[i].date.toDateString() %></p>
               <% } %>
-              <p class="text-center"><%= messages[i].date.toDateString() %></p>
-              <p class="text-center"><%= messages[i].message %></p>
+            </div>
+              <div class="flex justify-start">
+                <p class=" bg-slate-900 rounded px-4 py-1 w-full"><%= messages[i].message %></p>
+              </div>
           </div>
         <% } %>
       </div>
