@@ -19,6 +19,9 @@ router.post('/member-sign-up', member_controller.member_access_signup_post);
 router.get('/create-message', member_controller.create_message_get);
 router.post('/create-message', member_controller.create_message_post);
 
+// Admin delete message page
+router.post('/delete-message', member_controller.delete_message_post);
+
 router.get('/log-out', member_controller.member_logout_get);
 
 module.exports = router;

@@ -243,3 +243,12 @@ exports.member_logout_get = function (req, res) {
     res.redirect('/');
   });
 };
+
+exports.delete_message_post = function (req, res, next) {
+  Messages.findByIdAndRemove(req.body.messageId, function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect('/');
+  });
+};
