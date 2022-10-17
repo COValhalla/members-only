@@ -1,22 +1,46 @@
 <nav
   class="flex justify-between bg-slate-900 p-4 text-lg text-white border-white border"
 >
-  <a class="hover:text-gray-500" href="/">Members Only Messageboard</a>
+  <a class="hidden md:block hover:text-gray-500" href="/">Members Only Messageboard</a>
+  <a class="md:hidden hover:text-gray-500" href="/">
+    <img class="invert" src="/images/home.svg" alt="">
+  </a>
   <div class="flex gap-4">
 
 
     <% if (user) { %>
-      <a class="hover:text-gray-500" href="/auth/create-message"> Create Message </a>
+      <a class="hidden md:block hover:text-gray-500" href="/auth/create-message"> Create Message </a>
+      <a class="md:hidden hover:text-gray-500" href="/auth/create-message">
+        <img class="invert" src="/images/create-message.svg" alt="">
+      </a>
       <% if (status === 'guest') { %>
-        <a class="hover:text-gray-500" href="/auth/member-sign-up"> Become Member </a>
+        <a class="hidden md:block hover:text-gray-500" href="/auth/member-sign-up"> Become Member </a>
+        <a class="md:hidden hover:text-gray-500" href="/auth/member-sign-up">
+          <img class="invert" src="/images/become-member.svg" alt="">
+        </a>
       <% } %>
       <% if (status === 'member') { %>
-        <a class="hover:text-gray-500" href="/auth/member-sign-up"> Become Admin </a>
+        <a class="hidden md:block hover:text-gray-500" href="/auth/member-sign-up"> Become Admin </a>
+        <a class="md:hidden hover:text-gray-500" href="/auth/member-sign-up">
+          <img class="invert" src="/images/become-member.svg" alt="">
+        </a>
       <% } %>
     
-    <a class="hover:text-gray-500" href="/auth/log-out"> Log-Out </a>
+    <a class="hidden md:block hover:text-gray-500" href="/auth/log-out"> Log-Out </a>
+    <a class="md:hidden hover:text-gray-500" href="/auth/log-out">
+      <img class="invert" src="/images/logout.svg" alt="">
+    </a>
     <% } else { %>
-      <a class="hover:text-gray-500" href="/auth/sign-up"> Sign-Up </a>
-    <a class="hover:text-gray-500" href="/auth/log-in"> Log-In </a>
+      <a class="hidden md:block hover:text-gray-500" href="/auth/sign-up"> Sign-Up </a>
+      <a class="md:hidden hover:text-gray-500" href="/auth/sign-up">
+        <img class="invert" src="/images/become-member.svg" alt="">
+      </a>
+    <a class="hidden md:block hover:text-gray-500" href="/auth/log-in"> Log-In </a>
+    <a class="md:hidden hover:text-gray-500" href="/auth/log-in">
+      <img class="invert" src="/images/login.svg" alt="">
+    </a>
     <% } %> 
+
 </nav>
+
+
