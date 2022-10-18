@@ -6,7 +6,7 @@ A basic message-board app that allows all visitors to view messages. Visitors ca
 - Dynamic views based on member status
 - Dynamic error messages based on member status during sign-up
 
-Live Preview: https://members-only-valhalla.herokuapp.com//
+Live Preview: https://members-only-valhalla.herokuapp.com/
 
 ## Authors
 
